@@ -28,7 +28,8 @@ autoGenerator.execute();
 ```
 
 #### 生成结果图片
-![输入图片说明](1717120613209.jpg)
+entity生成展示
+
 
 
 
