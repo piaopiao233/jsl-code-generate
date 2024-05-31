@@ -1,7 +1,7 @@
 # jsl-code-generate
 
 #### 介绍
-java的springboot框架代码生成器，支持生成表的分页，删除，新增，修改，支持生成vue页面。生成的代码需要依赖springboot和mybatis-plus框架。
+ **java的springboot框架代码生成器，支持生成表的分页，删除，新增，修改，支持生成vue页面。生成的代码需要依赖springboot和mybatis-plus框架。** 
 
 #### 使用说明
 ```
@@ -28,9 +28,16 @@ autoGenerator.execute();
 ```
 
 #### 生成结果图片
-entity生成展示
+ **
 
+### entity生成展示
+** 
+![输入图片说明](imgs/entity.jpg)
+### controller生成展示
+** 
+![输入图片说明](imgs/controller.jpg)
 
-
-
-
+### vue生成展示
+** 
+![输入图片说明](imgs/vue.jpg)
+![输入图片说明](imgs/vueview.png)
