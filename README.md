@@ -27,9 +27,6 @@ autoGenerator.setDefaultAnalyzes();
 autoGenerator.execute();
 ```
 
-#### 生成结果图片
- **
-
 ### entity生成展示
 ** 
 ![输入图片说明](imgs/entity.jpg)
