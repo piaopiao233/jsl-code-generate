@@ -2,6 +2,7 @@ package com.jsl.codegenerate.main;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.db.ds.simple.SimpleDataSource;
 import cn.hutool.db.meta.Column;
@@ -76,8 +77,9 @@ public class AutoGenerator {
         tlAnalyzes.put("EntityAnalyze", new EntityAnalyze(replaceVariable, table, generateConfig, "ftl/DefaultEntity.tl"));
     }
 
-    public void addAnalyzes(String name, Class analyzeClass) {
-
+    public void addAnalyzes(String name, Class<? extends TLAnalyze> analyzeClass, String tlPath) {
+        TLAnalyze tlAnalyze = ReflectUtil.newInstance(analyzeClass, replaceVariable, table, generateConfig, tlPath);
+        tlAnalyzes.put(name, tlAnalyze);
     }
 
     public void execute() {
