@@ -94,7 +94,7 @@ public class AutoGenerator {
             Assert.notBlank(analyzeResult.getOutPutPath(), "输出路径有误");
             Assert.notBlank(analyzeResult.getFileName(), "文件名有误");
             String out = analyzeResult.getOutPutPath() + "/" + analyzeResult.getFileName();
-            if(!FileUtil.exist(analyzeResult.getOutPutPath())){
+            if(!FileUtil.exist(out)){
                 FileUtil.writeString(analyzeResult.getAnalyzeCodeTxt(), out, StandardCharsets.UTF_8);
             }
         }
