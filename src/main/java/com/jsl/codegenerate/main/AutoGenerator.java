@@ -11,6 +11,7 @@ import cn.hutool.db.meta.Table;
 import com.jsl.codegenerate.analyze.*;
 import com.jsl.codegenerate.model.AnalyzeResult;
 import com.jsl.codegenerate.model.GenerateConfig;
+import lombok.Data;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -19,6 +20,7 @@ import java.util.*;
  * @author: piaopiao
  * @date: 2024-05-29 15:31
  */
+@Data
 public class AutoGenerator {
 
     //生成配置

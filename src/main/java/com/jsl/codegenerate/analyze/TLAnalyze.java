@@ -22,6 +22,8 @@ public abstract class TLAnalyze {
 
     protected String tlPath;
 
+    protected String outPath;
+
     //需要替换的变量
     protected Map<String, String> replaceVariable;
 

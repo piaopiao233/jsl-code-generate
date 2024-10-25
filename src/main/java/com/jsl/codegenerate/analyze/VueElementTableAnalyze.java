@@ -19,10 +19,12 @@ import java.util.Map;
  */
 public class VueElementTableAnalyze extends TLAnalyze {
 
-
     StringBuilder tableCloums = new StringBuilder();
+
     StringBuilder formList = new StringBuilder();
+
     Map<String, Object> formRules = new HashMap();
+
     Map<String, Object> addForm = new HashMap();
 
     public VueElementTableAnalyze(Map<String, String> replaceVariable, Table table, GenerateConfig generateConfig, String tlPath) {
@@ -81,7 +83,11 @@ public class VueElementTableAnalyze extends TLAnalyze {
         String entity = replaceVariable.get("${Entity}");
         analyzeResult.setFileName(entity + ".vue");
         //输出文件路径
-        analyzeResult.setOutPutPath("C:\\Users\\Administrator\\Desktop");
+        if (StrUtil.isNotBlank(this.outPath)){
+            analyzeResult.setOutPutPath(this.outPath);
+        }else {
+            analyzeResult.setOutPutPath("C:\\Users\\Administrator\\Desktop");
+        }
         return analyzeResult;
     }
 
