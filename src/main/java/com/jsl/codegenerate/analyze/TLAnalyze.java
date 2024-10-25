@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.db.meta.Table;
 import com.jsl.codegenerate.model.AnalyzeResult;
 import com.jsl.codegenerate.model.GenerateConfig;
+import lombok.Data;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.Map;
  * @author: piaopiao
  * @date: 2024-05-29 13:54
  */
+@Data
 public abstract class TLAnalyze {
 
     public String blank ="    ";
