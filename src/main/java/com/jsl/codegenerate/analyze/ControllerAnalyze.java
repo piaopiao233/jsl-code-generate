@@ -1,5 +1,6 @@
 package com.jsl.codegenerate.analyze;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.db.meta.Table;
 import com.jsl.codegenerate.model.AnalyzeResult;
 import com.jsl.codegenerate.model.GenerateConfig;
@@ -30,7 +31,11 @@ public class ControllerAnalyze extends TLAnalyze {
         String entity = replaceVariable.get("${Entity}");
         analyzeResult.setFileName(entity + "Controller.java");
         //输出文件路径
-        analyzeResult.setOutPutPath(getOutPutPath() + "/controller");
+        if (StrUtil.isNotBlank(this.outPath)){
+            analyzeResult.setOutPutPath(this.outPath);
+        }else {
+            analyzeResult.setOutPutPath(getOutPutPath() + "/controller");
+        }
         return analyzeResult;
     }
 }

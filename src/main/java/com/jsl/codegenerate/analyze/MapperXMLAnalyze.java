@@ -1,5 +1,6 @@
 package com.jsl.codegenerate.analyze;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.db.meta.Table;
 import com.jsl.codegenerate.model.AnalyzeResult;
 import com.jsl.codegenerate.model.GenerateConfig;
@@ -33,7 +34,12 @@ public class MapperXMLAnalyze extends TLAnalyze {
         //输出文件路径
         File file = new File(generateConfig.getOutPutJavaDir());
         String outPutMapperDir = file.getParentFile().getAbsolutePath() + "/" + "resources/mapper";
-        analyzeResult.setOutPutPath(outPutMapperDir);
+        //输出文件路径
+        if (StrUtil.isNotBlank(this.outPath)){
+            analyzeResult.setOutPutPath(this.outPath);
+        }else {
+            analyzeResult.setOutPutPath(outPutMapperDir);
+        }
         return analyzeResult;
     }
 

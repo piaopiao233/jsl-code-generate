@@ -108,7 +108,11 @@ public class EntityAnalyze extends TLAnalyze {
         String entity = replaceVariable.get("${Entity}");
         analyzeResult.setFileName(entity + ".java");
         //输出文件路径
-        analyzeResult.setOutPutPath(this.getOutPutPath() + "/entity");
+        if (StrUtil.isNotBlank(this.outPath)){
+            analyzeResult.setOutPutPath(this.outPath);
+        }else {
+            analyzeResult.setOutPutPath(getOutPutPath() + "/entity");
+        }
         return analyzeResult;
     }
 
