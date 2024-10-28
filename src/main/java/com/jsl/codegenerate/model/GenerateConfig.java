@@ -1,10 +1,16 @@
 package com.jsl.codegenerate.model;
 
 
+import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author: piaopiao
  * @date: 2024-05-29 11:15
  */
+@Data
 public class GenerateConfig {
 
     private String outPutJavaDir;
@@ -13,43 +19,17 @@ public class GenerateConfig {
 
     private String packageName;
 
+    private boolean isJoin;
+
+    private List<LeftJoinInfo> leftJoinInfos = new ArrayList<>();
+
     //控制层返回的结果
     private String controllerResultPackagePath;
 
-    public String getOutPutJavaDir() {
-        return outPutJavaDir;
-    }
-
-    public void setOutPutJavaDir(String outPutJavaDir) {
-        this.outPutJavaDir = outPutJavaDir;
-    }
-
-    public DataSource getDataSource() {
-        return dataSource;
-    }
-
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    public String getPackageName() {
-        return packageName;
-    }
-
-    public void setPackageName(String packageName) {
-        this.packageName = packageName;
-    }
 
     public String getOutPutPath() {
         String packagePath = packageName.replaceAll("\\.", "/");
         return outPutJavaDir + "/" + packagePath;
     }
 
-    public String getControllerResultPackagePath() {
-        return controllerResultPackagePath;
-    }
-
-    public void setControllerResultPackagePath(String controllerResultPackagePath) {
-        this.controllerResultPackagePath = controllerResultPackagePath;
-    }
 }
