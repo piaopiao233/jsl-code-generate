@@ -77,6 +77,9 @@ public class AutoGenerator {
         tlAnalyzes.put("ServiceImplAnalyze", new ServiceImplAnalyze(replaceVariable, table, generateConfig, "ftl/DefaultServiceImpl.tl"));
         tlAnalyzes.put("VueElementTableAnalyze", new VueElementTableAnalyze(replaceVariable, table, generateConfig, "ftl/DefaultVueElementTable.tl"));
         tlAnalyzes.put("EntityAnalyze", new EntityAnalyze(replaceVariable, table, generateConfig, "ftl/DefaultEntity.tl"));
+        if (this.getGenerateConfig().isJoin()){
+            tlAnalyzes.put("EntityDtoAnalyze", new EntityDtoAnalyze(replaceVariable, table, generateConfig, "ftl/DefaultEntity.tl"));
+        }
     }
 
     public void addAnalyzes(String name, Class<? extends TLAnalyze> analyzeClass, String tlPath) {
