@@ -73,6 +73,12 @@ public class VueElementTableAnalyze extends TLAnalyze {
                 formRules.put(columnName, rules);
             }
         }
+        if (generateConfig.isJoin()){
+            generateConfig.getLeftJoinInfos().forEach(leftJoinInfo -> {
+                tableCloums.append("<el-table-column label='").append(leftJoinInfo.getSelectJoinTableColumnAnotherName())
+                        .append("' prop='").append(leftJoinInfo.getSelectJoinTableColumnAnotherName()).append("'></el-table-column>");
+            });
+        }
         code = code.replace("${tableCloums}", tableCloums);
         code = code.replace("${formList}", formList);
         code = code.replace("${formRules}", JSONUtil.toJsonStr(formRules));

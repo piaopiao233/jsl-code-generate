@@ -26,17 +26,18 @@ public class ServiceImplAnalyze extends TLAnalyze{
             String value = replaceVariable.get(key);
             code = code.replace(key, value);
         }
+        if (this.generateConfig.isJoin()){
+            code = code.replace("${implFindPage}","page(page)");
+        }else {
+            code = code.replace("${implFindPage}","this.baseMapper.findPage(page, queryWrapper)");
+        }
         AnalyzeResult analyzeResult = new AnalyzeResult();
         analyzeResult.setAnalyzeCodeTxt(code);
         //输出文件名称
         String entity = replaceVariable.get("${Entity}");
         analyzeResult.setFileName(entity + "ServiceImpl.java");
         //输出文件路径
-        if (StrUtil.isNotBlank(this.outPath)){
-            analyzeResult.setOutPutPath(this.outPath);
-        }else {
-            analyzeResult.setOutPutPath(getOutPutPath() + "/service/impl");
-        }
+        analyzeResult.setOutPutPath(getOutPutPath() + "/service/impl");
         return analyzeResult;
     }
 

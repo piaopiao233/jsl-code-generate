@@ -3,6 +3,7 @@ package ${packageName}.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import ${packageName}.entity.${Entity};
 import ${packageName}.mapper.${Entity}Mapper;
 import ${packageName}.service.${Entity}Service;
@@ -13,7 +14,8 @@ public class ${Entity}ServiceImpl extends ServiceImpl<${Entity}Mapper, ${Entity}
 
     @Override
     public Page findPage(Page page) {
-        return page(page);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        return ${implFindPage};
     }
 
     @Override
