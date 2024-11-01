@@ -31,11 +31,7 @@ public class ControllerAnalyze extends TLAnalyze {
         String entity = replaceVariable.get("${Entity}");
         analyzeResult.setFileName(entity + "Controller.java");
         //输出文件路径
-        if (StrUtil.isNotBlank(this.outPath)){
-            analyzeResult.setOutPutPath(this.outPath);
-        }else {
-            analyzeResult.setOutPutPath(getOutPutPath() + "/controller");
-        }
+        analyzeResult.setOutPutPath(getOutPutPath() + "/controller");
         return analyzeResult;
     }
 }

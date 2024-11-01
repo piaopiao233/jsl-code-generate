@@ -5,24 +5,17 @@ import cn.hutool.db.meta.Column;
 import cn.hutool.db.meta.Table;
 import com.jsl.codegenerate.model.AnalyzeResult;
 import com.jsl.codegenerate.model.GenerateConfig;
+
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class EntityDtoAnalyze extends TLAnalyze {
 
-    private List<String> existImports = new ArrayList<>();
-
     StringBuilder tableColumns = new StringBuilder();
-
-    StringBuilder imports = new StringBuilder();
 
     public EntityDtoAnalyze(Map<String, String> replaceVariable, Table table, GenerateConfig generateConfig, String tlPath) {
         super(replaceVariable, table, generateConfig, tlPath);
     }
-
-
 
     @Override
     public AnalyzeResult analyze() {
@@ -54,7 +47,7 @@ public class EntityDtoAnalyze extends TLAnalyze {
                     .append(";").append("//").append(column.getComment()).append("\n").append("\n");
 
         }
-        this.generateConfig.getLeftJoinInfos().forEach( leftJoinInfo -> {
+        this.generateConfig.getLeftJoinInfos().forEach(leftJoinInfo -> {
             String columnName = StrUtil.toCamelCase(leftJoinInfo.getSelectJoinTableColumnAnotherName());
             String javaAllType = leftJoinInfo.getJoinTableColumnClass().getName();
             //增加Import
@@ -66,26 +59,18 @@ public class EntityDtoAnalyze extends TLAnalyze {
             tableColumns.append(blank).append("private ").append(javaType).append(" ").append(columnName)
                     .append(";").append("\n").append("\n");
         });
-        code = code.replace("${tableColumns}", tableColumns);
-        code = code.replace("${import}", imports);
-        AnalyzeResult analyzeResult = new AnalyzeResult();
-        analyzeResult.setAnalyzeCodeTxt(code);
         //输出文件名称
         String entity = replaceVariable.get("${Entity}");
+        code = code.replace("${tableColumns}", tableColumns);
+        code = code.replace("${import}", imports);
+        code = code.replace(".entity", ".dto");
+        code = code.replace(entity, entity + "Dto");
+        AnalyzeResult analyzeResult = new AnalyzeResult();
+        analyzeResult.setAnalyzeCodeTxt(code);
         analyzeResult.setFileName(entity + "Dto.java");
         //输出文件路径
-        if (StrUtil.isNotBlank(this.outPath)){
-            analyzeResult.setOutPutPath(this.outPath);
-        }else {
-            analyzeResult.setOutPutPath(getOutPutPath() + "/Dto");
-        }
+        analyzeResult.setOutPutPath(getOutPutPath() + "/dto");
         return analyzeResult;
     }
 
-    private void addImport(String addImport) {
-        if (!existImports.contains(addImport)) {
-            imports.append("import ").append(addImport).append(";").append("\n");
-            existImports.add(addImport);
-        }
-    }
 }

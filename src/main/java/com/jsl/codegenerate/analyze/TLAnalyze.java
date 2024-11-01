@@ -2,13 +2,14 @@ package com.jsl.codegenerate.analyze;
 
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.db.meta.Table;
 import com.jsl.codegenerate.model.AnalyzeResult;
 import com.jsl.codegenerate.model.GenerateConfig;
 import lombok.Data;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Map;
 @Data
 public abstract class TLAnalyze {
 
-    public String blank ="    ";
+    public static final String blank ="    ";
 
     public abstract AnalyzeResult analyze();
 
@@ -32,16 +33,13 @@ public abstract class TLAnalyze {
     //表结构
     protected Table table;
 
+    //导入包
+    protected List<String> existImports = new ArrayList<>();
+
+    protected StringBuilder imports = new StringBuilder();
+
     //配置项
     protected GenerateConfig generateConfig;
-
-    public String getTlPath() {
-        return tlPath;
-    }
-
-    public void setTlPath(String tlPath) {
-        this.tlPath = tlPath;
-    }
 
     public TLAnalyze(Map<String, String> replaceVariable, Table table, GenerateConfig generateConfig, String tlPath) {
         this.tlPath = tlPath;
@@ -58,5 +56,12 @@ public abstract class TLAnalyze {
         Assert.notBlank(tlPath);
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(tlPath);
         return IoUtil.readUtf8(inputStream);
+    }
+
+    protected void addImport(String addImport) {
+        if (!existImports.contains(addImport)) {
+            imports.append("import ").append(addImport).append(";").append("\n");
+            existImports.add(addImport);
+        }
     }
 }

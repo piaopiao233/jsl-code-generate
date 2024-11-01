@@ -32,4 +32,8 @@ public class GenerateConfig {
         return outPutJavaDir + "/" + packagePath;
     }
 
+    public void addLeftJoinInfo(LeftJoinInfo leftJoinInfo){
+        leftJoinInfos.add(leftJoinInfo);
+    }
+
 }

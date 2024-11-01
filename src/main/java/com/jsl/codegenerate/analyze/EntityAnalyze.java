@@ -7,8 +7,6 @@ import com.jsl.codegenerate.model.AnalyzeResult;
 import com.jsl.codegenerate.model.GenerateConfig;
 
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,15 +15,11 @@ import java.util.Map;
  */
 public class EntityAnalyze extends TLAnalyze {
 
-    private List<String> existImports = new ArrayList<>();
-
     StringBuilder tableColumns = new StringBuilder();
-    StringBuilder imports = new StringBuilder();
 
     public EntityAnalyze(Map<String, String> replaceVariable, Table table, GenerateConfig generateConfig, String tlPath) {
         super(replaceVariable, table, generateConfig, tlPath);
     }
-
 
     @Override
     public AnalyzeResult analyze() {
@@ -107,20 +101,8 @@ public class EntityAnalyze extends TLAnalyze {
         //输出文件名称
         String entity = replaceVariable.get("${Entity}");
         analyzeResult.setFileName(entity + ".java");
-        //输出文件路径
-        if (StrUtil.isNotBlank(this.outPath)){
-            analyzeResult.setOutPutPath(this.outPath);
-        }else {
-            analyzeResult.setOutPutPath(getOutPutPath() + "/entity");
-        }
+        analyzeResult.setOutPutPath(getOutPutPath() + "/entity");
         return analyzeResult;
-    }
-
-    private void addImport(String addImport) {
-        if (!existImports.contains(addImport)) {
-            imports.append("import ").append(addImport).append(";").append("\n");
-            existImports.add(addImport);
-        }
     }
 
 }
