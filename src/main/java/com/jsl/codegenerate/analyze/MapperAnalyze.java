@@ -28,15 +28,13 @@ public class MapperAnalyze extends TLAnalyze {
         if (generateConfig.isJoin()) {
             //生成分页
             addImport("com.baomidou.mybatisplus.core.conditions.Wrapper");
-            addImport("com.baomidou.mybatisplus.core.mapper.BaseMapper");
-            addImport("com.baomidou.mybatisplus.core.metadata.IPage");
             addImport("com.baomidou.mybatisplus.core.toolkit.Constants");
             addImport("com.baomidou.mybatisplus.extension.plugins.pagination.Page");
             addImport("org.apache.ibatis.annotations.Param");
             //导入自己的Dto
             addImport(generateConfig.getPackageName() + ".dto." + entityDto);
             code = code.replace("${mapperImport}", imports);
-            String findPageName = "IPage<" + entityDto + "> findPage(Page page, @Param(Constants.WRAPPER) Wrapper wrapper);";
+            String findPageName = "Page<" + entityDto + "> findPage(Page page, @Param(Constants.WRAPPER) Wrapper wrapper);";
             code = code.replace("${mapperMethod}", blank + findPageName + "\n");
         } else {
             code = code.replace("${mapperImport}", "");
