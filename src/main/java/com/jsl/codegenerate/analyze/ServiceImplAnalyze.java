@@ -27,9 +27,9 @@ public class ServiceImplAnalyze extends TLAnalyze{
             code = code.replace(key, value);
         }
         if (this.generateConfig.isJoin()){
-            code = code.replace("${implFindPage}","page(page)");
-        }else {
             code = code.replace("${implFindPage}","this.baseMapper.findPage(page, queryWrapper)");
+        }else {
+            code = code.replace("${implFindPage}","page(page)");
         }
         AnalyzeResult analyzeResult = new AnalyzeResult();
         analyzeResult.setAnalyzeCodeTxt(code);
