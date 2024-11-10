@@ -38,6 +38,7 @@ public class MapperAnalyze extends TLAnalyze {
             code = code.replace("${mapperMethod}", blank + findPageName + "\n");
         } else {
             code = code.replace("${mapperImport}", "");
+            code = code.replace("${mapperMethod}", "");
         }
         AnalyzeResult analyzeResult = new AnalyzeResult();
         analyzeResult.setAnalyzeCodeTxt(code);
