@@ -57,6 +57,7 @@ public class AutoGenerator {
         replaceVariable.put("${controllerResultPackagePath}", generateConfig.getControllerResultPackagePath());
         replaceVariable.put("${Entity}", entity);
         replaceVariable.put("${entity}", camelCaseEntity);
+        replaceVariable.put("${EntityDto}", entity + "Dto");
         //获取主键类型
         Column primaryColumn = table.getColumn(primary);
         String javaAllType = DbTypeToJavaTypeMapper.getJavaType(primaryColumn.getType());
@@ -66,7 +67,8 @@ public class AutoGenerator {
         replaceVariable.put("${PrimaryType}", primaryType);
         replaceVariable.put("${Primary}", primary);
         String[] controllerResultPackagePaths = generateConfig.getControllerResultPackagePath().split("\\.");
-        replaceVariable.put("${controllerResultName}", controllerResultPackagePaths[controllerResultPackagePaths.length - 1]);
+        replaceVariable.put("${ResultName}", controllerResultPackagePaths[controllerResultPackagePaths.length - 1]);
+        replaceVariable.put("${tableComment}", table.getComment());
     }
 
     public void setDefaultAnalyzes() {

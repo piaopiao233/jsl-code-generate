@@ -21,6 +21,11 @@ public class EntityAnalyze extends TLAnalyze {
         super(replaceVariable, table, generateConfig, tlPath);
     }
 
+    //注释模板
+    public static final String COMMENT_TEMPLATE = "/**\n" +
+            "     * {}\n" +
+            "     */";
+
     @Override
     public AnalyzeResult analyze() {
         String code = getCode();
@@ -29,6 +34,8 @@ public class EntityAnalyze extends TLAnalyze {
             code = code.replace(key, value);
         }
         for (Column column : table.getColumns()) {
+            //加注释
+            tableColumns.append(blank).append(StrUtil.format(COMMENT_TEMPLATE, column.getComment())).append("\n");
             //主键的加上主键注释
             if (column.isPk()) {
                 imports.append("import com.baomidou.mybatisplus.annotation.TableId;").append("\n");
@@ -69,19 +76,19 @@ public class EntityAnalyze extends TLAnalyze {
                 }
             }
             //判断是否为TIME
-            if (column.getType() == Types.TIME){
+            if (column.getType() == Types.TIME) {
                 //增加import
                 addImport("org.springframework.format.annotation.DateTimeFormat");
                 //增加时间序列化注解
                 tableColumns.append(blank).append("@DateTimeFormat(pattern = \"HH:mm:ss\")").append("\n");
             }
-            if (column.getType() == Types.TIMESTAMP){
+            if (column.getType() == Types.TIMESTAMP) {
                 //增加import
                 addImport("org.springframework.format.annotation.DateTimeFormat");
                 //增加时间序列化注解
                 tableColumns.append(blank).append("@DateTimeFormat(pattern = \"yyyy-MM-dd HH:mm:ss\")").append("\n");
             }
-            if (column.getType() == Types.DATE){
+            if (column.getType() == Types.DATE) {
                 //增加import
                 addImport("org.springframework.format.annotation.DateTimeFormat");
                 //增加时间序列化注解
@@ -89,9 +96,13 @@ public class EntityAnalyze extends TLAnalyze {
             }
             //增加Import
             addImport(javaAllType);
+            //开启了knife4j
+            if (this.getGenerateConfig().isEnableKnife()) {
+                addImport("io.swagger.v3.oas.annotations.media.Schema");
+                tableColumns.append(blank).append(StrUtil.format("@Schema(description =\"{}\", required = {})", column.getComment(), !column.isNullable())).append("\n");
+            }
             //拼接变量和注释
-            tableColumns.append(blank).append("private ").append(javaType).append(" ").append(columnName)
-                    .append(";").append("//").append(column.getComment()).append("\n").append("\n");
+            tableColumns.append(blank).append("private ").append(javaType).append(" ").append(columnName).append(";").append("\n").append("\n");
 
         }
         code = code.replace("${tableColumns}", tableColumns);

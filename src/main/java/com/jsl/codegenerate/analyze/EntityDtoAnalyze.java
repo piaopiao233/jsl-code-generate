@@ -5,9 +5,9 @@ import cn.hutool.db.meta.Column;
 import cn.hutool.db.meta.Table;
 import com.jsl.codegenerate.model.AnalyzeResult;
 import com.jsl.codegenerate.model.GenerateConfig;
-
 import java.sql.Types;
 import java.util.Map;
+import static com.jsl.codegenerate.analyze.EntityAnalyze.COMMENT_TEMPLATE;
 
 public class EntityDtoAnalyze extends TLAnalyze {
 
@@ -25,6 +25,8 @@ public class EntityDtoAnalyze extends TLAnalyze {
             code = code.replace(key, value);
         }
         for (Column column : table.getColumns()) {
+            //加注释
+            tableColumns.append(blank).append(StrUtil.format(COMMENT_TEMPLATE, column.getComment())).append("\n");
             //设置long类型注解
             if (column.getType() == Types.BIGINT) {
                 //增加import
@@ -42,6 +44,11 @@ public class EntityDtoAnalyze extends TLAnalyze {
             String javaType = javaAllTypes[javaAllTypes.length - 1];
             //增加Import
             addImport(javaAllType);
+            //开启了knife4j
+            if (this.getGenerateConfig().isEnableKnife()){
+                addImport("io.swagger.v3.oas.annotations.media.Schema");
+                tableColumns.append(blank).append(StrUtil.format("@Schema(description =\"{}\")", column.getComment())).append("\n");
+            }
             //拼接变量和注释
             tableColumns.append(blank).append("private ").append(javaType).append(" ").append(columnName)
                     .append(";").append("//").append(column.getComment()).append("\n").append("\n");
@@ -56,6 +63,9 @@ public class EntityDtoAnalyze extends TLAnalyze {
             String[] javaAllTypes = javaAllType.split("\\.");
             String javaType = javaAllTypes[javaAllTypes.length - 1];
             //拼接变量和注释
+            if (this.getGenerateConfig().isEnableKnife()) {
+                tableColumns.append(blank).append(StrUtil.format("@Schema(description =\"{}\")", columnName)).append("\n");
+            }
             tableColumns.append(blank).append("private ").append(javaType).append(" ").append(columnName)
                     .append(";").append("\n").append("\n");
         });
