@@ -5,7 +5,6 @@ import cn.hutool.db.meta.Column;
 import cn.hutool.db.meta.Table;
 import com.jsl.codegenerate.model.AnalyzeResult;
 import com.jsl.codegenerate.model.GenerateConfig;
-
 import java.sql.Types;
 import java.util.Map;
 
@@ -21,10 +20,7 @@ public class EntityAnalyze extends TLAnalyze {
         super(replaceVariable, table, generateConfig, tlPath);
     }
 
-    //注释模板
-    public static final String COMMENT_TEMPLATE = "/**\n" +
-            "     * {}\n" +
-            "     */";
+
 
     @Override
     public AnalyzeResult analyze() {
@@ -99,7 +95,13 @@ public class EntityAnalyze extends TLAnalyze {
             //开启了knife4j
             if (this.getGenerateConfig().isEnableKnife()) {
                 addImport("io.swagger.v3.oas.annotations.media.Schema");
-                tableColumns.append(blank).append(StrUtil.format("@Schema(description =\"{}\", required = {})", column.getComment(), !column.isNullable())).append("\n");
+                String schema;
+                if (column.isNullable()){ //可以为null
+                    schema = "@Schema(description =\"{}\")";
+                }else {
+                    schema = "@Schema(description =\"{}\", requiredMode = Schema.RequiredMode.REQUIRED)";
+                }
+                tableColumns.append(blank).append(StrUtil.format(schema, column.getComment())).append("\n");
             }
             //拼接变量和注释
             tableColumns.append(blank).append("private ").append(javaType).append(" ").append(columnName).append(";").append("\n").append("\n");

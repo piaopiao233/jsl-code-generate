@@ -8,14 +8,15 @@ import javax.validation.constraints.NotNull;
 import ${controllerResultPackagePath};
 import ${packageName}.entity.${Entity};
 import ${packageName}.service.${Entity}Service;
-import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 ${ControllerImport}
 
 @RestController
 @RequestMapping("/${Entity}")
 @Validated
-@Api(tags = "${tableComment}管理")
+@Tag(name = "${tableComment}管理")
 public class ${Entity}Controller {
 
     @Autowired

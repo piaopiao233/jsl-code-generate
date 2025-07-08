@@ -21,6 +21,11 @@ public abstract class TLAnalyze {
 
     public static final String blank ="    ";
 
+    //注释模板
+    public static final String COMMENT_TEMPLATE = "/**\n" +
+            "     * {}\n" +
+            "     */";
+
     public abstract AnalyzeResult analyze();
 
     protected String tlPath;
