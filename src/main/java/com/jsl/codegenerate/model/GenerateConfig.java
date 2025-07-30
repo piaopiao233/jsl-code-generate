@@ -53,4 +53,8 @@ public class GenerateConfig {
         leftJoinInfos.add(leftJoinInfo);
     }
 
+    public LeftJoinInfo.LeftJoinInfoBuilder leftJoinInfoBuilder(){
+        return LeftJoinInfo.builder().generateConfig(this);
+    }
+
 }

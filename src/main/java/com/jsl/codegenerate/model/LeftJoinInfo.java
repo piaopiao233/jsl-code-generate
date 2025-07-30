@@ -25,4 +25,11 @@ public class LeftJoinInfo {
     //需要查询的其他表的列名的java对象
     private Class joinTableColumnClass;
 
+
+    private GenerateConfig generateConfig;
+
+    public GenerateConfig add() {
+        generateConfig.addLeftJoinInfo(this);
+        return generateConfig;
+    }
 }
